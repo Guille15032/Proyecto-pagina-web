@@ -1,1 +1,4 @@
-console.log('Hola ya me pueden ver');
+import './assets/css/index.css';
+import { initializeApp } from './assets/js/teachers/app';
+
+initializeApp();

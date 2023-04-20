@@ -1,38 +1,145 @@
-<!--Para comenzar a trabajar con el proyecto hay que poner en la consola el comando 'npm i' y para empezar a ejecutarlo 'npm run start'-->
-
 <!DOCTYPE html>
 <html lang="es-CO">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maestros</title>
+    <title>Profesores</title>
 </head>
+
 <body>
-    <header>
-        <h1>Profesores</h1>
-
-        <main class="container">
-
-            <section>
-                <article>
-                    Imagen
-                </article>
-                <article>
-                    Formulario
-                </article>   
-            </section>
-            <section>
-
-                <table></table>
-
-            </section>
-
-        </main>
-
-        <footer>
-            Derechos reservados <em class="fa-regular fa-copyright"></em> <!--Para acceder a mas iconos, en la pagina 'font awesome icons'-->
-        </footer>
+    <header class="my-3">
+        <h1 class="text-center"> Profesores </h1>
     </header>
+
+    <main class="container">
+
+        <section class="row text-center">
+            <article class="col-xs-12 col-md-6">
+
+                <img class="img-fluid rounded" src="./assets/img/teachersb.jpg" alt="Profesores">
+
+            </article>
+            <article class="col-xs-12 col-md-6">
+
+                <form novalidate class="form-floating" id="teacherForm">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtName" name="txtName" class="form-control" placeholder="Ejm: Yhoan">
+                        <label for="txtName">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea name="txtDescription" id="txtDescription" cols="30" rows="10" class="form-control"></textarea>
+                        <label for="txtDescription">Descripción</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Ejm: yhoan@gmail.com">
+                        <label for="txtEmail">Correo electrónico</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="date" id="txtBirthDate" name="txtBirthDate" class="form-control" placeholder="Ejm: 05/07/1993">
+                        <label for="txtBirthDate">Fecha de nacimiento</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="d-grid col-md-6">
+                            <button type="reset" id="btnCancel" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                        <div class="d-grid col-md-6">
+                            <button type="submit" id="btnSubmit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </article>
+        </section>
+
+        <section class="row mt-3">
+
+            <div class="col-12">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover table-bordered">
+
+                        <caption>
+                            Registros de los profesores
+                        </caption>
+
+                        <thead>
+
+                            <tr class="table-dark text-center">
+                                <th scope="col">
+                                    Id de profesor
+                                </th>
+                                <th scope="col">
+                                    Nombre
+                                </th>
+                                <th scope="col">
+                                    Descripción
+                                </th>
+                                <th scope="col">
+                                    Correo
+                                </th>
+                                <th scope="col">
+                                    Fecha nacimiento
+                                </th>
+                                <th scope="col">
+                                    Opciones
+                                </th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="align-middle">
+                                <td class="text-center">
+                                    102030
+                                </td>
+                                <td class="text-center">
+                                    Julian Mendoza Gomez
+                                </td>
+                                <td class="text-center">
+                                    Profesor de HTML - T.L. Desarrollo de Software UPB
+                                </td>
+                                <td class="text-center">
+                                    julian.mendoza@upb.edu.co
+                                </td>
+                                <td class="text-center">
+                                    05/07/1993
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary" title="Editar">
+                                        <em class="fa fa-pencil"></em>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" title="Eliminar">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Derechos reservados <em class="fa-regular fa-copyright"></em>
+    </footer>
+
 </body>
+
 </html>
