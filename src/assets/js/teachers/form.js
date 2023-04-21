@@ -32,3 +32,8 @@ export function getFormData() {
     };
     return teacher;
 }
+
+//Funcion para limpiar el formulario una vez enviado
+export  function resetForm(){
+    formElements.form.reset();
+}

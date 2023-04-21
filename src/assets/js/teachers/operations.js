@@ -1,5 +1,7 @@
 // Encargado de la interacción de js con html
-import { formElements, getFormData } from './form';
+import alertify from 'alertifyjs'; 
+
+import { formElements, getFormData, resetForm } from './form';
 import { createTeacher, readTeachers } from './repository';
 
 export function listeners() {
@@ -13,6 +15,8 @@ function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
         createTeacher(getFormData());
+        resetForm();
+        alertify.success('Profesor guardado correctamente');
         listTeachers();
     });
 }
@@ -40,16 +44,16 @@ function listTeachers(){
             colId.classList.add('text-center')
 
             const colName = document.createElement('td');
-            colName.textContent = teacher.name;
+            colName.textContent = name;
 
             const colDescription = document.createElement('td');
-            colDescription.textContent = teacher.description;
+            colDescription.textContent = description;
 
             const colEmail = document.createElement('td');
-            colEmail.textContent = teacher.email;
+            colEmail.textContent = email;
 
             const colBirthdate = document.createElement('td');
-            colBirthdate.textContent = teacher.birthDate;
+            colBirthdate.textContent = birthDate;
 
             const colButtons = document.createElement('td');
             colButtons.classList.add('text-center');
