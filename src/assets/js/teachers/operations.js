@@ -1,8 +1,15 @@
 // Encargado de la interacción de js con html
+
+//Primero se importan las librerias de terceros
 import alertify from 'alertifyjs'; 
 
-import { formElements, getFormData, resetForm } from './form';
+//Segundo se importan las librerias de propias
+import { validateForm } from './../utils/validations';
+
+//De tercero se importan las librerias en modulos
+import { formElements, fieldConfigurations, getFormData, resetForm } from './form';
 import { createTeacher, readTeachers } from './repository';
+
 
 export function listeners() {
     window.addEventListener('load', () => {
@@ -14,10 +21,15 @@ export function listeners() {
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
-        createTeacher(getFormData());
-        resetForm();
-        alertify.success('Profesor guardado correctamente');
-        listTeachers();
+
+        if (validateForm(fieldConfigurations)) {
+            createTeacher(getFormData());
+            resetForm();
+            alertify.success('Registro del profesor realizado correctamente');
+            listTeachers();
+        } else {
+            alertify.error('Verificar los datos del formulario');
+        }
     });
 }
 
@@ -41,19 +53,23 @@ function listTeachers(){
             // Se crea las columnas de la tabla
             const colId = document.createElement('td');
             colId.textContent = id;
-            colId.classList.add('text-center')
+            colId.classList.add('text-center');
 
             const colName = document.createElement('td');
             colName.textContent = name;
+            colName.classList.add('text-center');
 
             const colDescription = document.createElement('td');
             colDescription.textContent = description;
+            colDescription.classList.add('text-center');
 
             const colEmail = document.createElement('td');
             colEmail.textContent = email;
+            colEmail.classList.add('text-center');
 
             const colBirthdate = document.createElement('td');
             colBirthdate.textContent = birthDate;
+            colBirthdate.classList.add('text-center');
 
             const colButtons = document.createElement('td');
             colButtons.classList.add('text-center');
