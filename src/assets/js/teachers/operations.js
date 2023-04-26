@@ -4,7 +4,7 @@
 import alertify from 'alertifyjs'; 
 
 //Segundo se importan las librerias de propias
-import { validateForm } from './../utils/validations';
+import { validateForm, validateField, removeInputErrorMessage, removeErrorClassNameFields, removeErrorMessageElements } from './../utils/validations';
 
 //De tercero se importan las librerias en modulos
 import { formElements, fieldConfigurations, getFormData, resetForm } from './form';
@@ -15,16 +15,20 @@ export function listeners() {
     window.addEventListener('load', () => {
         listenFormSubmitEvent();
         listTeachers();
+        listenFormFieldsChangeEvent();
+        listenFormResetEvent(); 
     });
 }
 
 function listenFormSubmitEvent() {
     formElements.form.addEventListener('submit', (event) => {
         event.preventDefault();
+        alertify.dismissAll();
 
         if (validateForm(fieldConfigurations)) {
             createTeacher(getFormData());
             resetForm();
+            removeErrorClassNameFields('is-valid');
             alertify.success('Registro del profesor realizado correctamente');
             listTeachers();
         } else {
@@ -47,7 +51,7 @@ function listTeachers(){
 
             //Se crea las filas de la tabla
             const row = document.createElement('tr');
-            row.classList.add('align-middle')
+            row.classList.add('align-middle');
 
 
             // Se crea las columnas de la tabla
@@ -123,3 +127,26 @@ function listTeachers(){
         tbody.appendChild(trEmpty);
 }
 }
+
+
+function listenFormFieldsChangeEvent(){
+    fieldConfigurations.forEach(({ input, validations }) => {
+        input.addEventListener('change', () => {
+            removeInputErrorMessage(input);
+            validations.forEach((validationConfig) => {
+                validateField(input, validationConfig);
+
+            })
+        }); 
+    });
+}
+
+function listenFormResetEvent(){
+    formElements.form.addEventListener('reset', () => {
+        removeErrorMessageElements();
+        removeErrorMessageElements('is-valid');
+        resetForm();
+    });
+
+}
+

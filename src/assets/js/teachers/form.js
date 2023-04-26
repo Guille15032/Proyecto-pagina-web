@@ -48,7 +48,35 @@ export const fieldConfigurations = [
                 }
             }
         ]
-    }
+    },
+
+    {
+        input: formElements.fields.email,
+        validations: [
+            {
+                errorId: `${formElements.fields.description.id}Required`,
+                errorMessage: 'El correo electronico es obligatorio.',
+                //Las validaciones retornaran un 'false' cuando debe mostrar el mensaje de error y un 'true' cuando no debe hacerlo
+                validationFunction: (value) => {
+                    return value.trim() !== ''; 
+                }
+            }
+        ]
+    },
+
+    {
+        input: formElements.fields.birthDate,
+        validations: [
+            {
+                errorId: `${formElements.fields.description.id}Required`,
+                errorMessage: 'La fecha de nacimiento es obligatoria es obligatoria.',
+                //Las validaciones retornaran un 'false' cuando debe mostrar el mensaje de error y un 'true' cuando no debe hacerlo
+                validationFunction: (value) => {
+                    return value.trim() !== ''; 
+                }
+            }
+        ]
+    },
 ];   
     
 
