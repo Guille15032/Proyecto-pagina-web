@@ -1,14 +1,15 @@
 // Encargado de la interacción de js con html
 
 //Primero se importan las librerias de terceros
-import alertify from 'alertifyjs'; 
+import alertify from 'alertifyjs';
+import Swal from 'sweetalert2'; 
 
 //Segundo se importan las librerias de propias
 import { validateForm, validateField, removeInputErrorMessage, removeErrorClassNameFields, removeErrorMessageElements } from './../utils/validations';
 
 //De tercero se importan las librerias en modulos
-import { formElements, fieldConfigurations, getFormData, resetForm } from './form';
-import { createTeacher, readTeachers } from './repository';
+import { formElements, fieldConfigurations, getFormData, resetForm, setFormData } from './form';
+import { createTeacher, readTeachers, findTeacherById } from './repository';
 
 
 export function listeners() {
@@ -17,6 +18,7 @@ export function listeners() {
         listTeachers();
         listenFormFieldsChangeEvent();
         listenFormResetEvent(); 
+        listenTableClickEvent();
     });
 }
 
@@ -65,7 +67,7 @@ function listTeachers(){
 
             const colDescription = document.createElement('td');
             colDescription.textContent = description;
-            colDescription.classList.add('text-center');
+            
 
             const colEmail = document.createElement('td');
             colEmail.textContent = email;
@@ -86,6 +88,7 @@ function listTeachers(){
             editButton.setAttribute('type', 'button');
             const editIcon = document.createElement('em');
             editIcon.classList.add('fa', 'fa-pencil');
+            editIcon.dataset.id = id;
             editButton.appendChild(editIcon);
             colButtons.appendChild(editButton);
 
@@ -97,6 +100,7 @@ function listTeachers(){
             deleteButton.setAttribute('type', 'button');
             const deleteIcon = document.createElement('em');
             deleteIcon.classList.add('fa', 'fa-trash');
+            deleteIcon.dataset.id = id;
             deleteButton.appendChild(deleteIcon);
             colButtons.appendChild(deleteButton);
             
@@ -150,3 +154,48 @@ function listenFormResetEvent(){
 
 }
 
+function listenTableClickEvent(){
+    const table = document.getElementById('tblTeachers');
+    table.addEventListener('click', ({target}) => {
+
+        const idTeacher = target.getAttribute('data-id');
+
+        if(target.classList.contains('btn-edit') || target.classList.contains('fa-pencil')){
+            editTeacher(idTeacher);
+
+        } else if(target.classList.contains('btn-delete') || target.classList.contains('fa-trash')) {
+            Swal.fire({
+                title: '¿Estas seguro de que quieres eliminar el profesor: ?',
+                text: 'No podras deshacer esta accion',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#b2b2b2',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'No, cerrar'
+            }). then((resultConfirm) => {
+                    if(resultConfirm.isConfirmed){
+                        
+                    } else{
+                        alertify.dismissAll();
+                        alertify.message('Accion cancelada');
+                    }
+                
+            })
+        }
+    });
+}
+
+
+function editTeacher(idTeacher){
+    const teacher = findTeacherById(idTeacher);
+
+    if (teacher) {
+         setFormData(teacher);
+         window.scrollTo({top: 0, behavior: 'smooth'});
+    } else{
+        alertify.error('El profesor seleccionado no existe, verifique la informacion')
+    }
+
+    console.log('Profesor encontrado para editar:', teacher);
+}

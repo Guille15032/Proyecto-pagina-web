@@ -60,6 +60,13 @@ export const fieldConfigurations = [
                 validationFunction: (value) => {
                     return value.trim() !== ''; 
                 }
+            },
+            {
+                errorId: `${formElements.fields.email.id}Pattern`,
+                errorMessage: "El correo electronico no cumple con el formato correcto",
+                validationFunction: (value) => {
+                    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
+                }
             }
         ]
     },
@@ -105,4 +112,12 @@ export function getFormData() {
 //Funcion para limpiar el formulario una vez enviado
 export  function resetForm(){
     formElements.form.reset();
+}
+
+export function setFormData(teacher){
+    const { id, name, description, email, birthDate } = teacher;
+    formElements.fields.name.value = name;
+    formElements.fields.description.value = description;
+    formElements.fields.email.value = email;
+    formElements.fields.birthDate.value = birthDate; 
 }
